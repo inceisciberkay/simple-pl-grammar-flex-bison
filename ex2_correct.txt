@@ -1,0 +1,43 @@
+fn is_noisy(sound_level){
+	fl = 5.7;
+	divisor = 4;
+	if (sound_level > 50 && (fl / divisor > .9)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+fn multi_param_function(a, b, c){
+	return a * b + c;
+}
+
+main: {
+	sound_level << SOUND;
+	if(is_noisy(sound_level)){
+		sw5: on;
+	}
+	else {
+		sw7: off;
+	}
+
+	time2 << TIMER;
+	time2 = time2 + 100;	# adding 100 seconds to the current time
+
+	url = "https://www.cs.bilkent.edu.tr/~guvenir/courses/CS315";
+	id ~ url;
+
+	# sending integer value to another device
+	x = 3;
+	x >> CONNECTED_DEV[id];
+
+	# receiving integer value from another device
+	id ~ "https://domain/path";
+
+	y << CONNECTED_DEV[id];
+	if(y > 10) {
+		result = multi_param_function(y, 10, 3);
+		result = result % 10 - 5;
+	}
+}
